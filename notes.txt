@@ -81,6 +81,67 @@ I have two possibilities for this, one is to use useReducer to consolidate your 
 
 The other option is to skip the unit tests and go straight to the functional tests, and that way you'll be testing the effects of any changes to your state rather than testing whether or not your state is getting updated.
 
+Introduction to Functional Tests
+--------------------------------
+
+In this section, we are going to write a series of functional tests for our app, as you'll recall, functional tests, look at a user flow, what a user does and how the app changes from a user perspective.
+
+This is independent of our code, independent of how we've implemented our app.
+
+This means the functional tests are the same, regardless of whether we implement the app and redux or context.
+
+So that's what we're going to do for this section. 
+
+For this lecture, we're just going to update app.test.js from the default that comes with create-react-app.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
