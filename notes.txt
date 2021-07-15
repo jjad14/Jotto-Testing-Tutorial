@@ -1,3 +1,63 @@
+Mocking React Methods
+---------------------
+
+In this lecture, we're going to talk about Mock's and how they're used in jest.
+
+We're going to use them in this section when we start testing hooks.
+
+So what is a mock function?
+
+A mock function is a fake function that that runs instead of a real function.
+
+It can run alternate code or it can just act as a placeholder.
+
+When you specify that you want to mock a particular function for a test, jest will replace the real function with your mock.
+
+So when the test code, it runs your component code and if it encounters your actual function, it won't run that function.
+
+Instead, what it will run is your mock function.
+
+So why would you want to mock?
+
+There are three main reasons.
+
+The first is to keep the real function from running during the course of your tests. This prevents side effects like network calls. Imagine your actual code is making a network call to say, submit an order. You wouldn't want your test to submit an order every time there was a test.
+
+Another reason to mock is to spy on a function to see when it's called or with which arguments. So perhaps you want to know that when a user takes a particular action that a particular function will run with a set of arguments. You can do that by mocking the function and then checking to see that it was called with the correct arguments.
+
+Finally, you can provide return values for the function to set up test conditions, so this is something we might do with the useState hook. We might say we want the useState hook to return this value for the state. And that will be the initial starting condition for the test that the state has that particular value.
+
+I want to make a note about how I am going to be mocking react methods for this course.
+
+I am going to reset the properties on the react module to replace those properties or methods with Mock's, I'll go into more detail on this later, but basically I'm going to replace the useState property for react with my mock.
+
+In order for this to work, we will need to make sure we don't destructure any imports on react in our production code.
+
+import React from 'react';
+
+const [state, setState] = React.useState();
+
+So, for example, if we want to mock you state here, we will import, just react and when we run useState will run it as eact.useState, the method that we use for mocking will work with this code.
+
+import { useState } from 'react';
+
+const [state, setState] = useState();
+
+It will not work if we destructure useState. If we destructure use state from our import and use it like this, then the mocking method we're going to use here will not work.
+
+Now I know some people really much prefer structured imports, and so I will give you a way to mock using that.
+
+But I'm just going to give that as an aside. And the code that I'm going to write is going to use this method.
+
+
+
+
+
+
+
+
+
+
 
 
 
