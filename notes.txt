@@ -94,13 +94,30 @@ So that's what we're going to do for this section.
 
 For this lecture, we're just going to update app.test.js from the default that comes with create-react-app.
 
+Jest methods: .only() .skip() and .todo()
+------------------------------------------
+Jest has some methods for us that we can use to determine which tests will actually run.
+
+So we can use methods on the test and describe global.
+
+.only() 
+
+only run this test or described that has the DOT only specified and this is on a per file basis. So it's going to run all of the files that it needs to run. But within the file, it's only going to run that one test that you've designated with only.
 
 
+.skip() 
 
+Dot, skip is the inverse, it will run all of the tests except for the one with Dot Skip specified. 
 
+So this is good for isolating tests, sometimes I do this when my tests are failing and I only want to rerun that one test that's failing or skipping tests, which is what we're going to do here to make sure that these tests don't run until we're ready for them.
 
+.todo()
 
+There's also a third method called todo, and that's to remind yourself to write a particular test later.
 
+I don't use this so much in test driven development, but as long as I'm talking about .only and .skip, I'll demonstrate .todo as well.
+
+Also, .todo only works with test() NOT describe, and again it is to remind yourself of tests that you might want to do in the future.
 
 
 
