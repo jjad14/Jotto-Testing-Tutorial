@@ -50,23 +50,36 @@ Now I know some people really much prefer structured imports, and so I will give
 But I'm just going to give that as an aside. And the code that I'm going to write is going to use this method.
 
 
+Note: If you change the import (inside the actual component) from 
 
+import React from 'react';
 
+to
 
+import { useState } from 'react';
 
+and leave the test file the way it is, then the tests will pass.
 
+But if you change the import to 
 
+import React, { useState } from 'react'.
 
+The tests will fail.
 
+Common Questions about Mocking React Methods
+--------------------------------------------
 
+In this lecture, I want to take a moment to talk about some common questions that I've gotten about mocking  useState, the first question I'd like to discuss is what if you wanted to destructure useState. 
 
+So this has trade offs the way anything does, the pros of destructuring useState on import is that your production code is cleaner, but your test code is more complicated.
 
+Now, neither destructuring on import or not destructuring on import is going to take care of my next question that I get commonly, which is what if I have multiple use state statements?
 
+What if I have a lot of pieces of state in the same component?
 
+I have two possibilities for this, one is to use useReducer to consolidate your pieces of state. I will discuss useReducer in the context portion of the course. This is the best solution if you'd like to unit test your component.
 
-
-
-
+The other option is to skip the unit tests and go straight to the functional tests, and that way you'll be testing the effects of any changes to your state rather than testing whether or not your state is getting updated.
 
 
 
