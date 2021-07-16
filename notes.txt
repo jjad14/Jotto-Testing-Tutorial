@@ -119,8 +119,141 @@ I don't use this so much in test driven development, but as long as I'm talking 
 
 Also, .todo only works with test() NOT describe, and again it is to remind yourself of tests that you might want to do in the future.
 
+Testing Axios
+----------------
+We will test Axios using Moxios.
+
+Let's talk a little more about is how it works and why we're going to use it, the server is necessary for the actual app. That's where we're going to get the random secret word. But we don't want to test the server when we're testing our app.
+
+We want to isolate our tests so that if the test fails, we know that it's our app failing and not the server or the connection to the server.
+
+Using Moxios lets us test our app without testing the server and actually even lets us test our app without even running the server or without the server even having been written.
+
+So let's take a look at how that works.
+
+The way it works is the test installs moxios, this lets Axios know to send requests to moxios instead of sending them to HTTP.
+
+The test then specifies what moxios should respond with.
+
+The test calls the action creator, and when the action creator calls Axios, Axios uses moxios instead of HTTP for the request, just like we asked it to, then the action creator receives that moxios response that we specified in the test and uses that when it runs the rest of the action creator.
+
+I'm going to dive into some moxios syntax here, but of course we'll be going over this again as we write the actual code.
+
+So for the moxios syntax, the test is going to call moxios.install(), which sets moxios as the Axios adapter, that is the functionality of moxios, that is its reason for existence.
+
+This route's any axios requests to moxios instead of HTTP.
+
+If you're using an Axios instance in your app, you can pass that as an argument to moxios install. 
+
+That will use your configured settings and it will make sure that any calls that you make to the instance get routed to moxios.
+
+If you are not using an instance, just leave that parameter blank and your axios calls will go to moxios.
+
+Then during the test, you'll call moxios.wait(), this takes a callback, it watches for axios calls and then it sends a response using the callback that you specified as the argument to wait.
+
+const request = moxios.requests.mostRecent();
+
+So that callback will get the most recent request using the syntax you see here, moxios.requests.mostRecent and since our test is only making one request, the request that we are concerned about is going to be the most recent.
+
+request.respondWith({
+    status: 200,
+    response: secretWord
+})
+
+And then we'll specify the response using this request to respond with method.
+
+Testing Async Functions
+------------------------
+
+In this lecture, I want to talk about how we're going to go about testing an asynchronous function, getSecretWord is asynchronous or it will be when we write it, it's going to return a promise. And that promise is going to be what's returned from Axios.
+
+The way our tests work is we will call get secret word, and then we will put an assertion in a .then() call back from the get secret word response.
+
+That way we can be sure that the assertion runs after the promise resolves because the .then() callback only runs after the promise resolves.
+
+There's a lot of asynchronicity here, both our Axios call is going to be asynchronous and we're also dealing with asynchronicity with our moxios.wait() call back.
+
+So it's more important than ever to see our tests fail and to make sure that they're actually working.
+
+It's very easy to make a mistake such that the tests complete before the asynchronous action is completed.
+
+So let's take a look at how this can lead to passing tests, even though they have assertions that fail.
+
+If you're not careful, the test can exit before your promise resolves.
+
+So the test function can start the asynchronous call. But the way JavaScript works is that it's completely possible for that test function to finish before that promise resolves.
+
+Now, you're definitely going to be running your assertion after the promise resolves, but if the assertion runs after the test function has completed, that's no good because the test function is checking when it completes whether or not any errors were thrown and if no errors were thrown. By the time the test function completes, it's going to give you a pass, even if the assertion runs later and throws an error.
+
+This is why it is so important to make sure that you can see your tests fail, if you see your tests fail, you know that it's running that assertion before the function is complete.
 
 
+So, we used moxios to test Axios without actually going to the server, Moxios configures Axios. It configures the Axios adapter to use moxios and not HTTP, which means that Axios will send its requests to moxios and not HTTP.
+
+Then in our tests, we can write what we want moxios to respond, and that will just mimic the server response.
+
+This is a way of being able to test action creators that use axios without having to have the server running.
+
+Mocking Modules with Jest
+-------------------------
+
+Before we get started in this section, I want to take a moment to talk about how to mock module's in Jest.
+
+So up until now in this course, we've mocked pieces of modules or methods from modules individually, for example, we mocked react use state, and we did this by overriding the used state method on react.
+
+We did this individually in some test files and not in others, this was reasonable because sometimes we wanted to mock used state and sometimes we wanted to let it run if we wanted to test functionality.
+
+However, get secret word is something we are going to want to mock everywhere.
+
+We never want to go across the network except maybe for end to end testing, which we're not covering in this course.
+
+So for this, we are going to mock this module, the module that contains get secret word, we're going to mock that globally so that it will automatically be mocked for all of our files.
+
+If we want to mock a module globally, we can use a mock file, so a global mock file, it can be used by any test file.
+
+You put it in a special directory with a special name that's to underscores and then the word Mock's and then two more underscores.
+
+And this is useful if you want to mock every test you run or almost every test.
+
+The test file will import from that Mock's file instead of the actual module, unless you explicitly tell it not to.
+
+The location of the Mock's folder depends on whether you are marking a node module, something you installed or an app module for your project.
+
+For a node module, it's going to be at the same level as the node_modules folder.
+
+For Project Module's, it's at the same level as the actual module, so here inside the source directory, if we wanted to mock our helpers.js module, then our Mock's directory would be at the same level as the module we wanted to mock. And then inside we would have our mock module.
+
+That's not the only difference between mocking node modules and project modules.
+
+You have your Mock's file that provides the mocks in either case.
+
+If you were mocking a node module, for example, react, this is going to mock automatically for all of your test files unless you explicitly unmock it.
+
+So this is a situation where you need to opt out if you decide you do not want to mock or react.js, you have to say so.
+
+Otherwise it's going to be mocked.
+
+However, if you're mocking a project module like the helper.js I had in my last slide, this one will not mock unless you explicitly specify at the top of your test file that you want to mock this module.
+
+So this one is an opt in. Node modules automatically, unless you opt out, project modules don't mock unless you opt in.
+
+Finally, I want to make a couple notes about mocking with Create React app.
+
+One is that there is an issue with the location of node modules, Mock's that Mock's directory actually needs to be at the top level of your source directory and not the same level as node modules like it is for all other types of projects.
+
+Here's a link to the issue where you can find out more about it and see if it has been fixed or not.
+
+https://github.com/facebook/create-react-app/issues/7539
+
+Also, this is something that has bitten me in the behind several times, mocks automatically reset before every test.
+
+This is a problem if you have specified a return value in your mock function, it is not going to be a problem here because here we are simply going to be spying on the function and we're not actually going to be specifying a return value.
+
+But if you do specify a return value, it is going to be reset before every test.
+
+This is a link to the issue and the specific comment where you can get around it.
+
+https://github.com/facebook/jest/issues/9131#issuecomment-668790615
 
 
 
