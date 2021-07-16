@@ -255,45 +255,48 @@ This is a link to the issue and the specific comment where you can get around it
 
 https://github.com/facebook/jest/issues/9131#issuecomment-668790615
 
+Choice point: Redux or React Context?
+-------------------------------------
 
+At this point in the course, you have a choice, some of you might be more interested in testing redux
 
+Some people might be more interested in testing, react context for the same reasons.
 
+And some people might be interested in both because, you know, the more knowledge, the better.
 
+So here is the point where you get to make a decision.
 
+Redux and react context are two ways to share state among components in your react apps.
 
+So sometimes there are props or a state that's needed by a lot of different components and you want to be able to share that among many different components.
 
+There are a couple of reasons why.
 
+One would be a global setting that almost every component needs. So something like the language that the user has chosen, each component is going to need to know which language to use for its strings or perhaps a visual theme.
 
+So perhaps a user can choose a light theme or a dark theme, and every component is going to need to know which theme to display.
 
+Also, you might use shared state for deeply nested components that need access to a particular piece of shared state, but the ancestors don't.
 
+Now, react context and redux are not the only choices for shared state, they're just the ones that I discuss in this course.
 
+And I do get questions about when to use which. 
 
+In general context, context works great for simple apps.
 
+But Redux has better tools for more sophisticated apps so it can do things like optimize if you're going to have updates very frequently.
 
+It also has good developer tools for debugging, for example, and redux supports middleware so you can automatically run code when any action is fired.
 
+For example, if you want to log events to an analytics pipeline.
 
+Finally, I want to talk about how artificial it is to use even context on our Jotto app, it's just too simple to need shared state, really only has two levels of components.
 
+There's our app component. And then underneath that, there's a second level of components like congrats and input.
 
+So we could pretty easily keep all of the state as internal app level state and just pass the state and any setter functions as props.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+This is a simple app, it's good for learning so that you don't have to track too much complexity about the app and the shared state is artificial, but I'm using it to demonstrate how you would test shared state in a case where it really is needed.
 
 
 
