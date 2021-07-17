@@ -298,6 +298,57 @@ So we could pretty easily keep all of the state as internal app level state and 
 
 This is a simple app, it's good for learning so that you don't have to track too much complexity about the app and the shared state is artificial, but I'm using it to demonstrate how you would test shared state in a case where it really is needed.
 
+Intro to Redux Testing
+-----------------------
+
+I wanted to take a moment in this lecture to summarize what we did in this section, I'm calling it simple redux because it doesn't involve async action creators or thunk, but simple is a relative term.
+
+So the first thing we did was we tested an action creator and a reducer, a simple action creator is a function returning an object so we can test it as we would any other function.
+
+Same thing with a reducer. It's a function that returns state. So, again, we can test it as a function.
+
+Then we looked at setting state in tests or creating tests for components that use redux hooks.
+
+We created a store factory utility, and this gave us the ability to create a store for testing that uses the same reducer as our app.
+
+Eventually we'll add middlewares, again, that will be accessed easily by both our App Store and by our testing store.
+
+We wrapped our input component component in provider and we used Mount.
+
+We wrapped the component in the provider so we wouldn't get errors about using use selector outside a provider.
+
+We could also have mocked use selector, but we chose not to do that because using provider is less complicated and it's closer to our actual production code.
+
+We needed to use Mount so that we could access the input component within the provider.
+
+Then that store that we created using store factory, we passed it as a prop to our provider, we can create that store with an initial state and then our input component inside will have access to that state.
+
+Another choice we made, which I didn't discuss beforehand, was that we decided to use an actual redux store and not a mock store, there is a package called redux-mock-store, and an advantage of this package is it can test intermediate actions.
+
+So if you have a series of actions where it goes into some sort of loading stage while you're waiting for Ajax and then completes that loading state at the end redux-mock-store can tell you all of the actions that were fired before you got to the final state, whereas the actual store can only look at that final state.
+
+But the mock store cannot test changes to the state. It only shows you the series of actions. So the two of them have different advantages.
+
+A final advantage of the actual store is that it's closer to the app. Any time you're mocking, you're one step removed from the app and you're running the risk of testing something that doesn't really apply to the app itself.
+
+Testing Redux Thunk
+--------------------
+
+Redux Thunk is a middleware for redux, and it provides additional functionality.
+
+It's a way for us to have more flexibility in our action creators instead of returning an action object that the action creators will return a function.
+
+So that's what I thunk is it's a function that returns a function.
+
+Because we're going to be returning a function instead of an action object, we have the ability now to dispatch multiple actions within that function.
+
+Another thing that Thunk allows us to do is access the current state, and that's going to be very useful in this case.
+
+So our guess word action creator will return a function that always dispatches guests word and conditionally dispatches correct guests, depending on whether or not the word is correct.
+
+Plus, within that function, we can access the success piece of state so we can determine whether or not we need to dispatch correct guests.
+
+
 
 
 
