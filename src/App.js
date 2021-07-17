@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Congrats from "./Congrats";
 import GuessedWords from "./GuessedWords";
 import Input from "./Input";
+import TotalGuesses from "./TotalGuesses";
 import { getSecretWord } from "./actions";
 import "./App.css";
 
@@ -21,9 +22,11 @@ function App() {
 	return (
 		<div className="container" data-test="component-app">
 			<h1>Jotto</h1>
+			<div>The secret word is {secretWord}</div>
 			<Congrats success={success} />
 			<Input success={success} secretWord={secretWord} />
 			<GuessedWords guessedWords={guessedWords} />
+			<TotalGuesses guessCount={guessedWords.length} />
 		</div>
 	);
 }

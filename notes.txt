@@ -373,4 +373,59 @@ Or you could do less than what we've done this section, not test the state from 
 
 I'm showing you how to do a variety of levels so you can decide which you think it works best for you and your team.
 
+Jotto Challenges for Redux
+----------------------------
 
+1
+The first challenge asks you to track the number of guesses that the user has made.
+
+So there are two parts to this challenge.
+
+One is to add a column to the guest words table that gives the guest number for each word, and the other is to make a new component that shows how many total guesses have been made.
+
+2
+The second challenge is to make a button that resets the game, it'll get a new secret word and it will clear the guest words.
+
+This challenge touches a lot of pieces of this app, it touches action creators and reducers and it also touches component.
+
+So this is a good challenge to for planning and really getting getting your fingers inside the app.
+
+So we're going to be adding the new word button and you'll display that only after a successful guess when it's clicked, you'll reset the game with a new word from the server and you'll be making a component for this new word button.
+
+You can either get the state by using the you selector hook or you can pass the state along from the parent component using props.
+
+3
+The next challenge builds on the last one, and it is making a give up button, so you've guessed three word is and go on with your day.
+
+So you click the give up button and then the app will display for you what the secret word was and give you an encouraging message.
+
+It will also show that new word button component so that the user can play again.
+
+So the challenge is to display that give up button only when the word has not been guessed correctly. And when the user clicks, you'll show the secret word, your display, you could call it a failure message or you could call it a better luck next time message, and you'll also display the new word button.
+
+4
+The fourth challenge is something different here, the user is going to input the secret word.
+
+So instead of getting the secret word from the server, it's going to come from a user so the one user could input a secret word and then another user could try and guess it.
+
+So you have the secret word button and then you also have a form to enter the secret word after the button has been clicked.
+
+5
+If you want to work some more with mock CEOs, I would encourage you to try this challenge number five, which is a random word, server error.
+
+So if you have an error from the random word server display in error rather than just having the game not work correctly.
+
+So this could be if there was a problem contacting the server, you can't even get to the server or if the server responds with a status and error type status of four hundred or five hundred status.
+
+6
+Finally, this last one has no makeup because this is all back end, it's more Axios and Maxus practice, and you'll instead of using the secret word server or the random word server that I made for the course, you can use this Wordnik server. So just more moxey US practice. But with a different server, you do need to get an off token to use the server, which is why I didn't use it for the course.
+
+http://developer.wordnik.com/
+
+use words/randomWord endpoint
+http://developer.wordnik.com/docs.html
+
+
+Solution:
+
+https://github.com/bonnie/udemy-ENZYME/tree/master/SOLUTIONS%20for%20Jotto%20Redux%20Hooks%20Challenges
