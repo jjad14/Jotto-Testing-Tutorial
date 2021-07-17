@@ -25,16 +25,18 @@ function App() {
 
 	return (
 		<div className="container" data-test="component-app">
-			<h1>Jotto</h1>
-			<Congrats success={success} />
-			<SecretWordReveal display={gaveUp} secretWord={secretWord} />
-			<NewWord
-				display={success || gaveUp}
-				resetAction={() => dispatch(resetGame())}
-			/>
-			<Input success={success} secretWord={secretWord} />
-			<GuessedWords guessedWords={guessedWords} />
-			<TotalGuesses guessCount={guessedWords.length} />
+			<div className="d-flex flex-column">
+				<h1 className="text-center">Jotto</h1>
+				<Congrats success={success} />
+				<SecretWordReveal display={gaveUp} secretWord={secretWord} />
+				<NewWord
+					display={success || gaveUp}
+					resetAction={() => dispatch(resetGame())}
+				/>
+				<Input success={success} secretWord={secretWord} />
+				<GuessedWords guessedWords={guessedWords} />
+				<TotalGuesses guessCount={guessedWords.length} />
+			</div>
 		</div>
 	);
 }

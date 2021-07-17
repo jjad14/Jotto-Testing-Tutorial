@@ -16,8 +16,8 @@ const Input = ({ secretWord }) => {
 	}
 
 	return (
-		<div data-test="component-input">
-			<form className="form-inline">
+		<div data-test="component-input" className="d-flex flex-column">
+			<form className="form-inline justify-content-center">
 				<input
 					type="text"
 					data-test="input-box"

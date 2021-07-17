@@ -9,8 +9,7 @@ const SecretWordReveal = ({ display, secretWord }) => {
 				className="alert alert-danger"
 			>
 				<span data-test="reveal-message">
-					The secret word was "{secretWord}"<br />
-					Better luck next time!
+					The secret word was "{secretWord}" Better luck next time!
 				</span>
 			</div>
 		);
