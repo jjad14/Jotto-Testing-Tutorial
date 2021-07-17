@@ -348,7 +348,29 @@ So our guess word action creator will return a function that always dispatches g
 
 Plus, within that function, we can access the success piece of state so we can determine whether or not we need to dispatch correct guests.
 
+Thunk Testing Summary
+---------------------
 
+If you're doing integration testing on a thank you, will want to create a store with an initial state based on what you're testing.
 
+Dispatch your thunk action creator. 
+
+And then check to see whether your state has been updated the way you expected it to be from your action creator.
+
+Now, you may be thinking to yourself, what about those functional tests that rewrote way back when before we split off between redux and context, aren't these just the same as the tests we already wrote?
+
+After all, we're trying no words guessed and we're trying some words guessed and we're trying to guess the secret word.
+
+I mean, this sounds awfully similar. And they are these tests are quite similar to the tests that we just wrote.
+
+The difference is these actually include the wiring up of the components.
+
+Now you can choose what level of testing you'd like to do.
+
+You could do more than what we've done already and unit test your action creators and your reducers.
+
+Or you could do less than what we've done this section, not test the state from your action creators and producers and simply skip straight to the functional tests.
+
+I'm showing you how to do a variety of levels so you can decide which you think it works best for you and your team.
 
 

@@ -1,14 +1,22 @@
 import React from "react";
 import { mount } from "enzyme";
+import { Provider } from "react-redux";
 
 import App from "./App";
-import { findByTestAttr } from "../test/testUtils";
+import { findByTestAttr, storeFactory } from "../test/testUtils";
+
+// activate global mock to make sure getSecretWord doesn't make api call
+jest.mock("./actions");
 
 // FUNCTIONAL TESTS
 
-const setup = (state = {}) => {
-	// TODO: apply state (redux or context)
-	const wrapper = mount(<App />);
+const setup = (initialState = {}) => {
+	const store = storeFactory(initialState);
+	const wrapper = mount(
+		<Provider store={store}>
+			<App />
+		</Provider>
+	);
 
 	// add value to input box
 	const inputBox = findByTestAttr(wrapper, "input-box");
@@ -21,7 +29,7 @@ const setup = (state = {}) => {
 	return wrapper;
 };
 
-describe.skip("no words have been guessed", () => {
+describe("no words have been guessed", () => {
 	let wrapper;
 	beforeEach(() => {
 		wrapper = setup({
@@ -38,7 +46,7 @@ describe.skip("no words have been guessed", () => {
 	});
 });
 
-describe.skip("some words have been guessed", () => {
+describe("some words have been guessed", () => {
 	let wrapper;
 	beforeEach(() => {
 		wrapper = setup({
@@ -55,12 +63,12 @@ describe.skip("some words have been guessed", () => {
 	});
 });
 
-describe.skip("guessed the secret word", () => {
+describe("guessed the secret word", () => {
 	let wrapper;
 	beforeEach(() => {
 		wrapper = setup({
 			secretWord: "party",
-			success: true,
+			success: false,
 			guessedWords: [{ guessedWord: "agile", letterMatchCount: 1 }],
 		});
 

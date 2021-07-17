@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 
 import App from "./App";
 
-// Activate Global Mock to make sure getSecretWord doesnt make network call
+// Activate Global Mock to make sure getSecretWord doesnt make api call
 jest.mock("./actions");
 
 // will be the mock file in actions/__mocks__/index

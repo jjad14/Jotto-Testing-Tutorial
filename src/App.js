@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 import Congrats from "./Congrats";
 import GuessedWords from "./GuessedWords";
@@ -7,14 +8,15 @@ import { getSecretWord } from "./actions";
 import "./App.css";
 
 function App() {
-	// TODO: get props from shared state
-	const success = false;
-	const secretWord = "party";
-	const guessedWords = [];
+	const success = useSelector((state) => state.success);
+	const guessedWords = useSelector((state) => state.guessedWords);
+	const secretWord = useSelector((state) => state.secretWord);
+
+	const dispatch = useDispatch();
 
 	useEffect(() => {
-		getSecretWord();
-	}, []);
+		dispatch(getSecretWord());
+	}, [dispatch]);
 
 	return (
 		<div className="container" data-test="component-app">
