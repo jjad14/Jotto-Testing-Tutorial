@@ -5,7 +5,9 @@ import Congrats from "./Congrats";
 import GuessedWords from "./GuessedWords";
 import Input from "./Input";
 import TotalGuesses from "./TotalGuesses";
-import { getSecretWord } from "./actions";
+import NewWord from "./NewWord";
+
+import { getSecretWord, resetGame } from "./actions";
 import "./App.css";
 
 function App() {
@@ -24,6 +26,10 @@ function App() {
 			<h1>Jotto</h1>
 			<div>The secret word is {secretWord}</div>
 			<Congrats success={success} />
+			<NewWord
+				display={success}
+				resetAction={() => dispatch(resetGame())}
+			/>
 			<Input success={success} secretWord={secretWord} />
 			<GuessedWords guessedWords={guessedWords} />
 			<TotalGuesses guessCount={guessedWords.length} />
