@@ -6,6 +6,7 @@ import GuessedWords from "./GuessedWords";
 import Input from "./Input";
 import TotalGuesses from "./TotalGuesses";
 import NewWord from "./NewWord";
+import SecretWordReveal from "./SecretWordReveal";
 
 import { getSecretWord, resetGame } from "./actions";
 import "./App.css";
@@ -14,6 +15,7 @@ function App() {
 	const success = useSelector((state) => state.success);
 	const guessedWords = useSelector((state) => state.guessedWords);
 	const secretWord = useSelector((state) => state.secretWord);
+	const gaveUp = useSelector((state) => state.gaveUp);
 
 	const dispatch = useDispatch();
 
@@ -26,8 +28,9 @@ function App() {
 			<h1>Jotto</h1>
 			<div>The secret word is {secretWord}</div>
 			<Congrats success={success} />
+			<SecretWordReveal display={gaveUp} secretWord={secretWord} />
 			<NewWord
-				display={success}
+				display={success || gaveUp}
 				resetAction={() => dispatch(resetGame())}
 			/>
 			<Input success={success} secretWord={secretWord} />
